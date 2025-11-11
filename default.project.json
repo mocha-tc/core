@@ -1,0 +1,22 @@
+{
+  "name": "Mocha",
+
+  "tree": {
+    "$className": "DataModel",
+    "$ignoreUnknownInstances": true,
+
+    "ServerScriptService": {
+      "$ignoreUnknownInstances": true,
+
+      "Mocha": {
+        "$ignoreUnknownInstances": true,
+        "$path": "src",
+
+        "Packages": {
+          "$ignoreUnknownInstances": true,
+          "$path": "roblox_packages"
+        }
+      }
+    }
+  }
+}
