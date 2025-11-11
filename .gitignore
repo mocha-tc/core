@@ -3,15 +3,12 @@
 /*.rbxlx.lock
 /*.rbxl
 /*.rbxl.lock
+/*.rbxm
+/*.rbxmx
 
 # pesde
 *_packages
 .pesde
-pesde.lock
 
 # rojo
 sourcemap.json
-
-# formatting
-stylua.toml
-selene.toml

@@ -1,6 +1,6 @@
--- name: converter
+-- name: Converter
 -- description: mocha converter root
--- class: root
+-- class: converter
 -- author(s): Primiti_ve, Ice
 
 local Root = script:FindFirstAncestor("Mocha")

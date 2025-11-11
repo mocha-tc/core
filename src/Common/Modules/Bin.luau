@@ -3,15 +3,18 @@
 -- class: utility
 -- author(s): Red-Blox, Primiti_ve
 
-export type BinItem = Instance | RBXScriptConnection | () -> ...any
+export type BinItem = Instance | RBXScriptConnection | () -> ...any | thread
 export type Bin = {
-	_Bin: { BinItem },
-
 	Add: (Item: BinItem) -> (),
 	Empty: () -> (),
+
+	_Bin: { BinItem },
+	_CustomFunctions: { [string]: (any) -> () },
 }
 
-return function(CustomFunctions: { [string]: (any) -> () }): Bin
+return function(CustomFunctions: { [string]: (any) -> () }?): Bin
+	CustomFunctions = CustomFunctions or {}
+
 	local Bin: { BinItem } = {}
 
 	return {
@@ -25,23 +28,23 @@ return function(CustomFunctions: { [string]: (any) -> () }): Bin
 		Empty = function()
 			-- loop through all items in Bin
 			for _, Item in pairs(Bin) do
-				-- get type of Item
-				local Type = typeof(Item)
-
-				if Type == "Instance" then
+				if typeof(Item) == "Instance" then
 					-- destroy Item
 					Item:Destroy()
-				elseif Type == "RBXScriptConnection" then
+				elseif typeof(Item) == "RBXScriptConnection" then
 					-- disconnect Item
 					Item:Disconnect()
-				elseif Type == "function" then
+				elseif typeof(Item) == "function" then
 					-- run Item
 					task.spawn(Item)
+				elseif typeof(Item) == "thread" then
+					-- cancel Item
+					task.cancel(Item)
 				else
 					-- check if CustomFunctions[Type] exists
-					if CustomFunctions[Type] and typeof(CustomFunctions[Type]) == "function" then
+					if CustomFunctions[typeof(Item)] and typeof(CustomFunctions[typeof(Item)]) == "function" then
 						-- run CustomFunctions[Type]
-						CustomFunctions[Type](Item)
+						CustomFunctions[typeof(Item)](Item)
 					end
 				end
 			end
@@ -52,5 +55,6 @@ return function(CustomFunctions: { [string]: (any) -> () }): Bin
 
 		-- internal usage
 		_Bin = Bin,
+		_CustomFunctions = CustomFunctions,
 	} :: Bin
 end

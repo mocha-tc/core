@@ -1,6 +1,6 @@
 -- name: Themes
 -- description: brush themes
--- class: utility
+-- class: manifest
 -- author(s): Primiti_ve
 
 export type Theme = {

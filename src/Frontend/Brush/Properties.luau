@@ -1,6 +1,6 @@
 -- name: Properties
 -- description: brush property map
--- class: utility
+-- class: manifest
 -- author(s): Primiti_ve
 
 local PropertyMap = {
