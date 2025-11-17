@@ -1,0 +1,26 @@
+# contributing to mocha
+- make a pull request!
+- if your pull request is accepted, you will be added to the mocha plugin credits
+
+## 0. prerequisites
+- you need [pesde](https://pesde.dev/) and [rokit](https://github.com/rojo-rbx/rokit) (for packages and tools respectively!)
+- you need a github account!
+
+## 1. getting started
+- fork the mocha repository
+- install rokit tools by running `rokit install` in a terminal
+- install pesde packages by running `pesde install` in a terminal
+
+## 2. making changes
+- we recommend using these extensions:
+  - luau language server
+  - selene
+  - stylua
+  - todo+
+- if you're editing a script, feel free to add yourself to the credits.
+- if you make a new script, please add the script info (name, class, authors, etc) to the top!
+
+## 2.1. notices
+- pull requests may be rejected for:
+  - too many critical changes
+  - introducing breaking changes for elsewhere in mocha (without addressing them first)
