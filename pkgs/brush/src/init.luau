@@ -3,18 +3,12 @@
 -- class: library
 -- author(s): Primiti_ve
 
-local Root = script:FindFirstAncestor("Mocha")
-local Common = Root:WaitForChild("Common")
+local Logger = require("./roblox_packages/Logger")
+local Utils = require("./roblox_packages/Utils")
+local Types = require("./roblox_packages/Types")
 
-local Types = require(Common:WaitForChild("Types"))
-
-local Logger = require(Common:WaitForChild("Exports"):WaitForChild("Logger"))
-local Bin = require(Common:WaitForChild("Modules"):WaitForChild("Bin"))
-
-local Themes = require(script.Themes)
-local Properties = require(script.Properties)
-
-local PropertyUtils = require(Common.Utils.Property)
+local Themes = require("@self/Themes")
+local Properties = require("@self/Properties")
 
 local Brush = {
 	Themes = {},
@@ -37,7 +31,7 @@ function Brush.Themes.Sync(Objects: GuiObject | { GuiObject })
 			continue
 		end
 
-		local ObjectBin = Bin()
+		local ObjectBin = Utils.Bin()
 
 		task.spawn(Brush.Themes.Update, Object)
 
@@ -86,7 +80,7 @@ function Brush.Themes.Update(Object: GuiObject)
 			continue
 		end
 
-		if PropertyUtils.HasProperty(Object, Property) then
+		if Utils.Property.HasProperty(Object, Property) then
 			local CurrentValue = Object[Property]
 
 			if table.find(Properties.ValidTypes, typeof(CurrentValue)) then

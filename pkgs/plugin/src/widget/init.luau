@@ -3,8 +3,7 @@
 -- class: utility
 -- author(s): Primiti_ve
 
-local Root = script:FindFirstAncestor("Mocha")
-local PluginGlobal = require(Root.Common.Exports.PluginGlobal)
+local Utils = require("../roblox_packages/Utils")
 
 local Widget = {}
 Widget.__index = Widget
@@ -32,7 +31,7 @@ function Widget:CreateWidget(FromGUI: Instance?)
 		return self
 	end
 
-	local plugin = PluginGlobal.get()
+	local plugin = Utils.PluginGlobal.get()
 
 	if not plugin then
 		return self
@@ -68,7 +67,7 @@ function Widget:CreateToolbar(ToolbarTitle: string)
 		return self
 	end
 
-	local plugin = PluginGlobal.get()
+	local plugin = Utils.PluginGlobal.get()
 
 	if not plugin then
 		return self
@@ -84,7 +83,7 @@ function Widget:CreateButton(ButtonName: string, ButtonDescription: string, Butt
 		return self
 	end
 
-	local plugin = PluginGlobal.get()
+	local plugin = Utils.PluginGlobal.get()
 
 	if not plugin then
 		return self
@@ -107,7 +106,7 @@ function Widget:AppendToWidget(Object: Instance)
 		return self
 	end
 
-	local plugin = PluginGlobal.get()
+	local plugin = Utils.PluginGlobal.get()
 
 	if not plugin then
 		return self

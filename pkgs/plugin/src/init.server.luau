@@ -3,15 +3,14 @@
 -- class: root
 -- author(s): Primiti_ve
 
-local GUI = script.Common.Assets.GUI:Clone()
-local PluginGlobal = require(script.Common.Exports.PluginGlobal)
+local Converter = require("./roblox_packages/Converter")
+local Brush = require("./roblox_packages/Brush")
+local Utils = require("./roblox_packages/Utils")
 
-PluginGlobal.set(plugin)
+local WidgetClass = require(script.widget)
+local GUI = script.assets.GUI:Clone()
 
-local Converter = require(script.Backend.Converter)
-
-local WidgetClass = require(script.Frontend.Widget)
-local Brush = require(script.Frontend.Brush)
+Utils.PluginGlobal.set(plugin)
 
 local WidgetSize = Vector2.new(450, 250)
 local CreatedWidget = WidgetClass.new("mocha", WidgetSize)
@@ -31,7 +30,7 @@ local Environment = {
 	Widget = Widget,
 
 	Exports = {
-		PluginGlobal = PluginGlobal,
+		PluginGlobal = Utils.PluginGlobal,
 	},
 }
 

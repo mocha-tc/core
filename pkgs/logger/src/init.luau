@@ -3,10 +3,7 @@
 -- class: export
 -- author(s): Primiti_ve
 
-local Root = script:FindFirstAncestor("Mocha")
-local Packages = Root:WaitForChild("Packages")
-
-local luaulog = require(Packages:WaitForChild("luaulog"))
+local luaulog = require("./roblox_packages/luaulog")
 local Logger = luaulog.Logger.new({
 	luaulog.Common.Enrichers.LogLevelEnricher(),
 	luaulog.Common.Enrichers.DynSourceEnricher(true),

@@ -10,12 +10,7 @@
 
       "Mocha": {
         "$ignoreUnknownInstances": true,
-        "$path": "src",
-
-        "Packages": {
-          "$ignoreUnknownInstances": true,
-          "$path": "roblox_packages"
-        }
+        "$path": "pkgs"
       }
     }
   }

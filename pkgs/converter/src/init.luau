@@ -3,19 +3,10 @@
 -- class: converter
 -- author(s): Primiti_ve, Ice
 
-local Root = script:FindFirstAncestor("Mocha")
-local Common = Root:WaitForChild("Common")
-
-local Logger = require(Common:WaitForChild("Exports"):WaitForChild("Logger"))
+local Logger = require("./roblox_packages/Logger")
+local Types = require("./roblox_packages/Types")
 
 local Converters = {}
-
-export type Converter = {
-	name: string,
-
-	isConvertable: (Instance) -> (boolean, string?),
-	convert: (Instance) -> Instance,
-}
 
 -- automatically get all converter objects
 -- this script doesn't need type checking, so we can get away with this
@@ -35,10 +26,10 @@ Traverse(script)
 
 -- best-guess conversion
 -- basically just chooses the first converter that matches
-function convert(Object: Instance)
-	local ChosenConverter = nil :: Converter?
+function convert_co(Object: Instance)
+	local ChosenConverter = nil :: Types.Converter?
 
-	for _, OtherConverter: Converter in pairs(Converters) do
+	for _, OtherConverter: Types.Converter in pairs(Converters) do
 		local Success, _Error = OtherConverter.isConvertable(Object)
 
 		if Success then
@@ -65,7 +56,12 @@ function convert(Object: Instance)
 	end
 end
 
+-- tc tower format to mtk tower format converter
+function convert_tower(Tower: Instance) end
+
 return {
 	Converters = Converters,
-	convert = convert,
+
+	convert_co = convert_co,
+	convert_tower = convert_tower,
 }

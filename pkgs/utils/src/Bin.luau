@@ -9,12 +9,9 @@ export type Bin = {
 	Empty: () -> (),
 
 	_Bin: { BinItem },
-	_CustomFunctions: { [string]: (any) -> () },
 }
 
-return function(CustomFunctions: { [string]: (any) -> () }?): Bin
-	CustomFunctions = CustomFunctions or {}
-
+return function(): Bin
 	local Bin: { BinItem } = {}
 
 	return {
@@ -40,12 +37,6 @@ return function(CustomFunctions: { [string]: (any) -> () }?): Bin
 				elseif typeof(Item) == "thread" then
 					-- cancel Item
 					task.cancel(Item)
-				else
-					-- check if CustomFunctions[Type] exists
-					if CustomFunctions[typeof(Item)] and typeof(CustomFunctions[typeof(Item)]) == "function" then
-						-- run CustomFunctions[Type]
-						CustomFunctions[typeof(Item)](Item)
-					end
 				end
 			end
 
@@ -55,6 +46,5 @@ return function(CustomFunctions: { [string]: (any) -> () }?): Bin
 
 		-- internal usage
 		_Bin = Bin,
-		_CustomFunctions = CustomFunctions,
 	} :: Bin
 end
