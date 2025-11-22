@@ -4,9 +4,7 @@
 -- author(s): Primiti_ve
 
 return {
-    Bin = require("@self/Bin"),
-    PluginGlobal = require("@self/PluginGlobal"),
-    Property = require("@self/Property"),
-
-    Types = require("@self/Types"),
+    Bin = require("./src/Bin"),
+    PluginGlobal = require("./src/PluginGlobal"),
+    Property = require("./src/Property"),
 }

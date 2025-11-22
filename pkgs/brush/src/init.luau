@@ -7,8 +7,8 @@ local Logger = require("./roblox_packages/Logger")
 local Utils = require("./roblox_packages/Utils")
 local Types = require("./roblox_packages/Types")
 
-local Themes = require("@self/Themes")
-local Properties = require("@self/Properties")
+local Themes = require("./src/Themes")
+local Properties = require("./src/Properties")
 
 local Brush = {
 	Themes = {},
@@ -63,7 +63,7 @@ function Brush.Themes.Update(Object: GuiObject)
 		ThemeName = StudioSettings.Theme.Name
 	end
 
-	local Theme = Themes[ThemeName] :: Themes.Theme?
+	local Theme = Themes[ThemeName] :: Types.Theme?
 
 	if not Theme then
 		Logger:Error(`[brush] theme with name {ThemeName} not found`)

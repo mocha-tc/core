@@ -17,6 +17,9 @@ roblox = "pkgs/logger"
 [workspace."naps_towers/mocha_plugin"]
 roblox = "pkgs/plugin"
 
+[workspace."naps_towers/mocha_plugin_build"]
+roblox = "plugin"
+
 [workspace."naps_towers/mocha_types"]
 roblox = "pkgs/types"
 

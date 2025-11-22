@@ -1,8 +1,9 @@
 name = "naps_towers/mocha_root"
 version = "0.0.0"
-private = true # it's a plugin anyway. why would you need it on pesde?
+private = true
 
-workspace_members = ["pkgs/*"]
+# added plugin purely for convenience, lmao
+workspace_members = ["pkgs/*", "plugin"]
 
 [target]
 environment = "roblox"

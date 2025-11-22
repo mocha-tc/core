@@ -1,13 +1,12 @@
-name = "naps_towers/mocha_plugin"
+name = "naps_towers/mocha_plugin_build"
 version = "0.1.0"
 description = "a tc to v5.5 client object converter"
 authors = ["Primiti_ve", "Ice"]
 license = "MIT"
+private = true
 
 [target]
 environment = "roblox"
-lib = "src/init.luau"
-build_files = ["src"]
 
 [indices]
 default = "https://github.com/pesde-pkg/index"
@@ -16,7 +15,6 @@ default = "https://github.com/pesde-pkg/index"
 default = "https://github.com/UpliftGames/wally-index"
 
 [scripts]
-roblox_sync_config_generator = ".pesde/scripts/roblox_sync_config_generator.luau"
 sourcemap_generator = ".pesde/scripts/sourcemap_generator.luau"
 
 [dev_dependencies]
@@ -28,8 +26,4 @@ pesde = "^0.7.0"
 lune = "^0.10.2"
 
 [dependencies]
-Converter = { workspace = "naps_towers/mocha_converter", version = "^" }
-Logger = { workspace = "naps_towers/mocha_logger", version = "^" }
-Brush = { workspace = "naps_towers/brush", version = "^" }
-Utils = { workspace = "naps_towers/mocha_utils", version = "^" }
-Fusion = { wally = "elttob/fusion", version = "^0.3.0" }
+Plugin = { workspace = "naps_towers/mocha_plugin", version = "^" }

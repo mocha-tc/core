@@ -3,29 +3,7 @@
 -- class: manifest
 -- author(s): Primiti_ve
 
-export type Theme = {
-	Background: {
-		Primary: Color3,
-		Secondary: Color3,
-	},
-
-	ScrollBar: {
-		Primary: Color3,
-	},
-
-	Text: {
-		Primary: Color3,
-		Secondary: Color3,
-
-		Warn: Color3,
-		Error: Color3,
-	},
-
-	Image: {
-		Primary: Color3,
-		Secondary: Color3,
-	},
-}
+local Types = require("../roblox_packages/Types")
 
 local Themes = {
 	Dark = {
@@ -75,6 +53,6 @@ local Themes = {
 			Secondary = Color3.fromRGB(50, 50, 50),
 		},
 	},
-} :: { [string]: Theme }
+} :: { [string]: Types.Theme }
 
 return Themes

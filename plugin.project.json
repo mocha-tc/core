@@ -1,5 +1,6 @@
 {
   "name": "Mocha",
+  "globIgnorePaths": [ "*/**/pesde.*" ],
 
   "tree": {
     "$className": "DataModel",
@@ -10,7 +11,12 @@
 
       "Mocha": {
         "$ignoreUnknownInstances": true,
-        "$path": "pkgs"
+        "$path": "plugin/src",
+
+        "roblox_packages": {
+          "$ignoreUnknownInstances": true,
+          "$path": "plugin/roblox_packages"
+        }
       }
     }
   }
