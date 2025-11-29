@@ -1,66 +1,66 @@
--- name: Converter
+-- name: converter
 -- description: mocha converter root
--- class: converter
+-- class: root
 -- author(s): Primiti_ve, Ice
 
-local Logger = require("./roblox_packages/Logger")
-local Types = require("./roblox_packages/Types")
+local logger = require("./roblox_packages/logger")
+local types = require("./roblox_packages/types")
+local utils = require("./roblox_packages/utils")
 
-local Converters = {}
+local converters = {}
 
 -- automatically get all converter objects
 -- this script doesn't need type checking, so we can get away with this
-function Traverse(Parent: Instance)
-	if Parent:IsA("Folder") then
-		for _, Child in pairs(Parent:GetChildren()) do
-			Traverse(Child)
-		end
-	elseif Parent:IsA("ModuleScript") and Parent ~= script then
-		local Module = require(Parent)
-
-		Converter.Converters[Parent.Name] = Module
+utils.misc.traverse(script, function(instance: Instance)
+	if not instance or not instance:IsA("ModuleScript") or instance == script then
+		return
 	end
-end
 
-Traverse(script)
+	local module = require(instance)
+
+	converters.converters[instance.Name] = module
+end)
 
 -- best-guess conversion
 -- basically just chooses the first converter that matches
 function convert_co(Object: Instance)
-	local ChosenConverter = nil :: Types.Converter?
+	local chosen_converter = nil :: types.converter?
 
-	for _, OtherConverter: Types.Converter in pairs(Converters) do
-		local Success, _Error = OtherConverter.isConvertable(Object)
+	for _, other_converter: types.converter in pairs(converters) do
+		-- we don't need the error
+		local success, _ = other_converter.is_convertable(Object)
 
-		if Success then
-			ChosenConverter = OtherConverter
+		if success then
+			chosen_converter = other_converter
 
 			break
 		end
 	end
 
-	if ChosenConverter then
-		local Success, Error = nil, nil
+	if chosen_converter then
+		local success, err = nil, nil
 
 		local _ = pcall(function()
-			debug.profilebegin(`[converter] convert object of type {ChosenConverter.name}`)
+			debug.profilebegin(`[converter] convert object of type {chosen_converter.name}`)
 
-			Success, Error = ChosenConverter.convert(Object)
+			success, err = chosen_converter.convert(Object)
 
 			debug.profileend()
 		end)
 
-		if not Success and Error and typeof(Error) == "string" then
-			Logger:Error(`[converter] {Error}`)
+		if not success and err and typeof(err) == "string" then
+			logger:Error(`[converter] {err}`)
 		end
 	end
 end
 
 -- tc tower format to mtk tower format converter
-function convert_tower(Tower: Instance) end
+function convert_tower(Tower: Instance)
+	logger:Warn("tower converting is not implemented!")
+end
 
 return {
-	Converters = Converters,
+	converters = converters,
 
 	convert_co = convert_co,
 	convert_tower = convert_tower,

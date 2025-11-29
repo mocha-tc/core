@@ -1,90 +1,89 @@
--- name: Brush
--- description: colour mnagement
+-- name: brush
+-- description: colour management
 -- class: library
 -- author(s): Primiti_ve
 
-local Logger = require("./roblox_packages/Logger")
-local Utils = require("./roblox_packages/Utils")
-local Types = require("./roblox_packages/Types")
+local logger = require("./roblox_packages/logger")
+local utils = require("./roblox_packages/utils")
+local types = require("./roblox_packages/types")
 
-local Themes = require("./src/Themes")
-local Properties = require("./src/Properties")
+local themes = require("@self/themes")
+local properties = require("@self/properties")
 
-local Brush = {
-	Themes = {},
-	Internals = {},
+local brush = {
+	themes = {},
 }
 
-local StudioSettings = settings().Studio :: Types.StudioSettings
+local studio_settings = settings().Studio :: types.studio_settings
 
-Brush.Themes.CurrentTheme = "Studio"
+brush.themes.current_theme = "Studio"
 
-function Brush.Themes.Sync(Objects: GuiObject | { GuiObject })
+function brush.themes.sync(objects: GuiObject | { GuiObject })
 	debug.profilebegin("[brush] sync theme start")
 
-	local ObjectBins = {}
+	local object_bins = {}
 
-	Objects = if typeof(Objects) == "table" then Objects else { Objects }
+	objects = if typeof(objects) == "table" then objects else { objects }
 
-	for _, Object in pairs(Objects) do
-		if not Object or not Object:HasTag("Themed") then
+	for _, object in pairs(objects) do
+		if not object or not object:HasTag("Themed") then
 			continue
 		end
 
-		local ObjectBin = Utils.Bin()
+		local object_bin = utils.bin.new()
 
-		task.spawn(Brush.Themes.Update, Object)
+		task.spawn(brush.themes.update, object)
 
-		ObjectBin.Add(StudioSettings.ThemeChanged:Connect(function()
-			task.spawn(Brush.Themes.Update, Object)
+		object_bin.add(studio_settings.ThemeChanged:Connect(function()
+			task.spawn(brush.themes.update, object)
 		end))
 
 		-- used for cleanup
-		ObjectBin.Add(Object.AncestryChanged:Connect(function(_, NewParent: Instance?)
-			if NewParent == nil then
-				ObjectBin.Empty()
+		object_bin.add(object.AncestryChanged:Connect(function(_, new_parent: Instance?)
+			if new_parent == nil then
+				object_bin.Empty()
 			end
 		end))
 
-		table.insert(ObjectBins, ObjectBin)
+		table.insert(object_bins, object_bin)
 	end
 
 	debug.profileend()
 
-	return ObjectBins
+	return object_bins
 end
 
-function Brush.Themes.Update(Object: GuiObject)
+function brush.themes.update(object: GuiObject)
 	debug.profilebegin("[brush] update theme start")
 
-	local ThemeName = Brush.Themes.CurrentTheme
+	local theme_name = brush.themes.current_theme
 
-	if ThemeName == "Studio" then
-		ThemeName = StudioSettings.Theme.Name
+	if theme_name == "studio" then
+		theme_name = studio_settings.Theme.Name
 	end
 
-	local Theme = Themes[ThemeName] :: Types.Theme?
+	local theme = themes[theme_name] :: types.theme?
 
-	if not Theme then
-		Logger:Error(`[brush] theme with name {ThemeName} not found`)
+	if not theme then
+		logger:Error(`[brush] theme with name {theme_name} not found`)
 
 		return
 	end
 
-	local ThemeScope = Object:GetAttribute("ThemeScope") or "Primary"
+	local theme_scope = object:GetAttribute("ThemeScope") or "Primary"
 
-	for Property, Value in pairs(Properties.PropertyMap) do
-		local ThemeEntry = Theme[Value] and Theme[Value][ThemeScope]
+	for property, value in pairs(properties.property_map) do
+		local theme_entry = theme[value] and theme[value][theme_scope]
 
-		if not ThemeEntry then
+		if not theme_entry then
 			continue
 		end
 
-		if Utils.Property.HasProperty(Object, Property) then
-			local CurrentValue = Object[Property]
+		if utils.property.has_property(object, property) then
+			local current_value = object[property]
 
-			if table.find(Properties.ValidTypes, typeof(CurrentValue)) then
-				Object[Property] = ThemeEntry
+			if table.find(properties.valid_types, typeof(current_value)) then
+				object[property] = theme_entry
 			end
 		end
 	end
@@ -92,4 +91,4 @@ function Brush.Themes.Update(Object: GuiObject)
 	debug.profileend()
 end
 
-return Brush
+return brush

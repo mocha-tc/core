@@ -1,16 +1,16 @@
--- name: PluginGlobal
+-- name: plugin_global
 -- description: quick access to plugin from anywhere
 -- class: export
 -- author(s): Primiti_ve
 
-local PluginGlobal = nil
+local plugin_global = nil
 
 function get()
-	return PluginGlobal
+	return plugin_global
 end
 
 function set(plugin: any)
-	PluginGlobal = plugin
+	plugin_global = plugin
 end
 
 return {

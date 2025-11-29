@@ -1,4 +1,4 @@
-name = "naps_towers/mocha_logger"
+name = "mocha_tc/logger"
 version = "0.1.0"
 description = "a tc to v5.5 client object converter"
 authors = ["Primiti_ve", "Ice"]

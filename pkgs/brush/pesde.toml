@@ -1,4 +1,4 @@
-name = "naps_towers/brush"
+name = "mocha_tc/brush"
 version = "0.1.0"
 description = "a theming library"
 authors = ["Primiti_ve", "Ice"]
@@ -28,6 +28,6 @@ pesde = "^0.7.0"
 lune = "^0.10.2"
 
 [dependencies]
-Logger = { workspace = "naps_towers/mocha_logger", version = "^" }
-Utils = { workspace = "naps_towers/mocha_utils", version = "^" }
-Types = { workspace = "naps_towers/mocha_types", version = "^" }
+logger = { workspace = "mocha_tc/logger", version = "^" }
+utils = { workspace = "mocha_tc/utils", version = "^" }
+types = { workspace = "mocha_tc/types", version = "^" }

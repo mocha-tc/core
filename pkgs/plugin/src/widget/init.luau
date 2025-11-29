@@ -1,19 +1,19 @@
--- name: Widget
+-- name: widget
 -- description: plugin widget/toolbar management
 -- class: utility
 -- author(s): Primiti_ve
 
-local Utils = require("../roblox_packages/Utils")
+local utils = require("../roblox_packages/utils")
 
-local Widget = {}
-Widget.__index = Widget
+local widget = {}
+widget.__index = widget
 
-function Widget.new(WidgetTitle: string, WidgetSize: Vector2)
-	local self = setmetatable({}, Widget)
+function widget.new(widget_title: string, WidgetSize: Vector2)
+	local self = setmetatable({}, widget)
 
-	self.WidgetTitle = WidgetTitle
+	self.widget_title = widget_title
 
-	self.WidgetInfo = DockWidgetPluginGuiInfo.new(
+	self.widget_info = DockWidgetPluginGuiInfo.new(
 		Enum.InitialDockState.Float,
 		false,
 		false,
@@ -26,97 +26,97 @@ function Widget.new(WidgetTitle: string, WidgetSize: Vector2)
 	return self
 end
 
-function Widget:CreateWidget(FromGUI: Instance?)
-	if self.Widget or not self.WidgetTitle or not self.WidgetInfo then
+function widget:create_widget(base_gui: Instance?)
+	if self.widget or not self.widget_title or not self.widget_info then
 		return self
 	end
 
-	local plugin = Utils.PluginGlobal.get()
+	local plugin = utils.plugin_global.get()
 
 	if not plugin then
 		return self
 	end
 
-	self.Widget = plugin:CreateDockWidgetPluginGui(self.WidgetTitle, self.WidgetInfo)
+	self.widget = plugin:CreateDockWidgetPluginGui(self.widget_title, self.widget_info)
 
-	if FromGUI then
-		for _, Child in pairs(FromGUI:GetChildren()) do
-			Child.Parent = self.Widget
+	if base_gui then
+		for _, child in pairs(base_gui:GetChildren()) do
+			self:append(child)
 		end
 
-		FromGUI:Destroy()
+		base_gui:Destroy()
 	end
 
 	return self
 end
 
-function Widget:Get(Name: string)
-	if Name == "Widget" then
-		if not self.Widget then
+function widget:get(name: string)
+	if name == "widget" then
+		if not self.widget then
 			return nil
 		end
 
-		return self.Widget
+		return self.widget
 	end
 
 	return nil
 end
 
-function Widget:CreateToolbar(ToolbarTitle: string)
-	if self.Toolbar then
+function widget:create_toolbar(toolbar_title: string)
+	if self.toolbar then
 		return self
 	end
 
-	local plugin = Utils.PluginGlobal.get()
+	local plugin = utils.plugin_global.get()
 
 	if not plugin then
 		return self
 	end
 
-	self.Toolbar = plugin:CreateToolbar(ToolbarTitle)
+	self.toolbar = plugin:CreateToolbar(toolbar_title)
 
 	return self
 end
 
-function Widget:CreateButton(ButtonName: string, ButtonDescription: string, ButtonIcon: string)
-	if not self.Toolbar or self.Button then
+function widget:create_button(button_name: string, button_description: string, button_icon: string)
+	if not self.toolbar or self.button then
 		return self
 	end
 
-	local plugin = Utils.PluginGlobal.get()
+	local plugin = utils.plugin_global.get()
 
 	if not plugin then
 		return self
 	end
 
-	self.Button = self.Toolbar:CreateButton(ButtonName, ButtonDescription, ButtonIcon)
-	self.Button.ClickableWhenViewportHidden = true
+	self.button = self.toolbar:CreateButton(button_name, button_description, button_icon)
+	self.button.ClickableWhenViewportHidden = true
 
-	self.Button.Click:Connect(function()
-		if self.Widget then
-			self.Widget.Enabled = not self.Widget.Enabled
+	self.button.Click:Connect(function()
+		if self.widget then
+			self.widget.Enabled = not self.widget.Enabled
 		end
 	end)
 
 	return self
 end
 
-function Widget:AppendToWidget(Object: Instance)
-	if not self.Widget then
+function widget:append(Object: Instance)
+	if not self.widget then
 		return self
 	end
 
-	local plugin = Utils.PluginGlobal.get()
+	local plugin = utils.plugin_global.get()
 
 	if not plugin then
 		return self
 	end
 
-	local Clone = Object:Clone()
+	local clone = Object:Clone()
 
-	Clone.Parent = self.Widget
+	clone.Parent = self.widget
 
 	return self
 end
 
-return Widget
+return widget

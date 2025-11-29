@@ -1,4 +1,4 @@
--- name: Teleporter
+-- name: teleporter
 -- description: teleporter converter
 -- class: converter
 -- author(s): Native, Primiti_ve
@@ -8,28 +8,28 @@
 export type TCTeleporter = Model & {
 	-- move effect
 	mE: BoolValue,
-	
+
 	-- move effect time
 	mT: NumberValue,
-	
+
 	-- tp players
-	tP: BoolValue, 
-	
+	tP: BoolValue,
+
 	-- tp pboxes
 	tPB: BoolValue,
-	
-	-- is it a winpad
+
+	-- is it a winpad?
+	-- (this value should never be used in an actual game... why do they even export this?? -prim)
 	wP: BoolValue,
-	
-	
+
 	destination: BasePart,
-	Telepart: BasePart
+	Telepart: BasePart,
 }
 
 -- etoh v5.5 teleporter
 export type V5Teleporter = typeof(script:WaitForChild("Original"))
 
-function isConvertable(Model: Model): (boolean, string?)
+function is_convertable(Model: Model): (boolean, string?)
 	if not Model or not Model:IsA("Model") then
 		return false, "model is missing or not a Model"
 	end
@@ -45,26 +45,27 @@ function isConvertable(Model: Model): (boolean, string?)
 end
 
 function convert(Model: TCTeleporter): V5Teleporter
-	local newtp:V5Teleporter = script.Original:Clone()
+	local newtp = script.Original:Clone() :: V5Teleporter
+
 	newtp.Name = "Teleporter"
-	
+
 	Model.destination.Name = "Destination"
 	Model.destination:FindFirstChildOfClass("Sound").Name = "TeleportSound"
 	Model.destination.Parent = newtp
-	
+
 	Model.Telepart.Name = "Teleporter"
 	Model.Telepart.Parent = newtp
-	
+
 	newtp.Destination:Destroy()
 	newtp.Teleporter:Destroy()
-	
+
 	newtp.TransitionTime.Value = if Model.mE then Model.mT else 0
 	newtp.TeleportPlayers.Value = Model.tP.Value
 	newtp.TeleportPushboxes.Value = Model.tPB.Value
 	newtp.Winpad.Value = Model.wP.Value
-	
+
 	newtp.Parent = Model.Parent
-	
+
 	return newtp
 end
 
@@ -72,5 +73,5 @@ return {
 	name = "teleporter",
 
 	convert = convert,
-	isConvertable = isConvertable,
+	is_convertable = is_convertable,
 }

@@ -1,33 +1,31 @@
--- name: Property
+-- name: property
 -- description: property utils
 -- class: utility
 -- author(s): Primiti_ve
 
-local PropertyCache = {}
+local property_cache = {}
 
-function HasProperty(Object: Instance, Property: string)
-	local ClassName = Object.ClassName
-	local ClassCache = PropertyCache[ClassName]
+function has_property(object: Instance, property: string)
+	local class_name = object.ClassName
+	local class_cache = property_cache[class_name]
 
-	-- if cache already has property, return that instead
-	if ClassCache and ClassCache[Property] ~= nil then
-		return ClassCache[Property]
+	-- if cache already has the property, return that instead
+	if class_cache and class_cache[property] ~= nil then
+		return class_cache[property]
 	end
 
-	-- check if object has property
-	local Success = pcall(function()
-		return Object[Property]
+	-- check if object has the property
+	local success = pcall(function()
+		return object[property]
 	end)
 
 	-- add it to the cache
-	PropertyCache[ClassName] = PropertyCache[ClassName] or {}
-	PropertyCache[ClassName][Property] = Success
+	property_cache[class_name] = property_cache[class_name] or {}
+	property_cache[class_name][property] = success
 
-	return Success
+	return success
 end
 
 return {
-	_PropertyCache = PropertyCache,
-
-	HasProperty = HasProperty,
+	has_property = has_property,
 }

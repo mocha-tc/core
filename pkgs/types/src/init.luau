@@ -5,12 +5,12 @@
 
 -- custom type for settings().Studio
 -- adds ThemeChanged
-export type StudioSettings = typeof(settings().Studio) & {
+export type studio_settings = typeof(settings().Studio) & {
 	ThemeChanged: RBXScriptSignal,
 }
 
 -- converter type
-export type Converter = {
+export type converter = {
 	name: string,
 
 	isConvertable: (Instance) -> (boolean, string?),
@@ -18,7 +18,7 @@ export type Converter = {
 }
 
 -- brush theme type
-export type Theme = {
+export type theme = {
 	Background: {
 		Primary: Color3,
 		Secondary: Color3,

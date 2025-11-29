@@ -1,4 +1,4 @@
-local fusion = require("../../roblox_packages/Fusion")
+local fusion = require("../../roblox_packages/fusion")
 
 export type story_controls = { [string]: any }
 export type story_cleanup = () -> ()

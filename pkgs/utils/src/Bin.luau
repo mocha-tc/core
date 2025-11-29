@@ -1,50 +1,50 @@
--- name: Bin
+-- name: bin
 -- description: simple memory management
 -- class: utility
 -- author(s): Red-Blox, Primiti_ve
 
-export type BinItem = Instance | RBXScriptConnection | () -> ...any | thread
-export type Bin = {
-	Add: (Item: BinItem) -> (),
-	Empty: () -> (),
-
-	_Bin: { BinItem },
+export type bin_item = Instance | RBXScriptConnection | () -> ...any | thread
+export type bin = {
+	add: (item: bin_item) -> (),
+	empty: () -> (),
 }
 
-return function(): Bin
-	local Bin: { BinItem } = {}
+function new(): bin
+	local bin: { bin_item } = {}
 
 	return {
-		Add = function(Item: BinItem)
-			-- add BinItem to Bin
-			table.insert(Bin, Item)
+		add = function(item: bin_item)
+			-- add bin_item to bin
+			table.insert(bin, item)
 
-			return Item
+			return item
 		end,
 
-		Empty = function()
-			-- loop through all items in Bin
-			for _, Item in pairs(Bin) do
-				if typeof(Item) == "Instance" then
-					-- destroy Item
-					Item:Destroy()
-				elseif typeof(Item) == "RBXScriptConnection" then
-					-- disconnect Item
-					Item:Disconnect()
-				elseif typeof(Item) == "function" then
-					-- run Item
-					task.spawn(Item)
-				elseif typeof(Item) == "thread" then
-					-- cancel Item
-					task.cancel(Item)
+		empty = function()
+			-- loop through all items in the bin
+			for _, item in pairs(bin) do
+				if typeof(item) == "Instance" then
+					-- destroy item
+					item:Destroy()
+				elseif typeof(item) == "RBXScriptConnection" then
+					-- disconnect item
+					item:Disconnect()
+				elseif typeof(item) == "function" then
+					-- run item
+					-- mainly used for any tasks that run when the bin is being emptied (e.g in-depth cleanup)
+					task.spawn(item)
+				elseif typeof(item) == "thread" then
+					-- cancel item
+					task.cancel(item)
 				end
 			end
 
-			-- clear Bin
-			table.clear(Bin)
+			-- clear the bin
+			table.clear(bin)
 		end,
-
-		-- internal usage
-		_Bin = Bin,
-	} :: Bin
+	} :: bin
 end
+
+return {
+	new = new,
+}

@@ -1,8 +1,10 @@
-name = "naps_towers/mocha_plugin_build"
+name = "mocha_tc/plugin_build"
 version = "0.1.0"
 description = "a tc to v5.5 client object converter"
 authors = ["Primiti_ve", "Ice"]
 license = "MIT"
+
+# it's the plugin. it doesn't need to be published
 private = true
 
 [target]
@@ -27,4 +29,4 @@ pesde = "^0.7.0"
 lune = "^0.10.2"
 
 [dependencies]
-Plugin = { workspace = "naps_towers/mocha_plugin", version = "^" }
+plugin = { workspace = "mocha_tc/plugin", version = "^" }

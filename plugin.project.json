@@ -1,5 +1,5 @@
 {
-  "name": "Mocha",
+  "name": "mocha",
   "globIgnorePaths": [ "*/**/pesde.*" ],
 
   "tree": {
@@ -9,7 +9,7 @@
     "ServerScriptService": {
       "$ignoreUnknownInstances": true,
 
-      "Mocha": {
+      "mocha": {
         "$ignoreUnknownInstances": true,
         "$path": "plugin/src",
 

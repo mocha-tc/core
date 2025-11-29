@@ -1,4 +1,4 @@
--- name: Spinner
+-- name: spinner
 -- description: spinner conversion script
 -- class: converter
 -- author(s): Ice, Primiti_ve
@@ -43,7 +43,7 @@ export type SpinningPart = Model & {
 -- etoh v5.5 spinning platform
 export type SpinningPlatform = typeof(defaultSpinningPlatform)
 
-function isConvertable(Model: Model): (boolean, string?)
+function is_convertable(Model: Model): (boolean, string?)
 	if not Model or not Model:IsA("Model") then
 		return false, "model is missing or not a Model"
 	end
@@ -149,5 +149,5 @@ return {
 	name = "spinner",
 
 	convert = convert,
-	isConvertable = isConvertable,
+	is_convertable = is_convertable,
 }

@@ -1,4 +1,4 @@
-local fusion = require("../../../roblox_packages/Fusion")
+local fusion = require("../../../roblox_packages/fusion")
 local types = require("../types")
 
 local button_component = require("../components/button")

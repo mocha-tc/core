@@ -12,3 +12,6 @@
 
 # rojo
 sourcemap.json
+
+# mocha
+build/

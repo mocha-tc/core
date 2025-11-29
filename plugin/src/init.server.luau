@@ -1,3 +1,4 @@
-local Plugin = require("@self/roblox_packages/Plugin")
+local plugin_global = plugin
+local plugin_pkg = require("@self/roblox_packages/plugin")
 
-Plugin.build(plugin)
+plugin_pkg.build(plugin_global)

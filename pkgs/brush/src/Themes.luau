@@ -1,11 +1,11 @@
--- name: Themes
+-- name: themes
 -- description: brush themes
 -- class: manifest
 -- author(s): Primiti_ve
 
-local Types = require("../roblox_packages/Types")
+local types = require("../roblox_packages/types")
 
-local Themes = {
+return {
 	Dark = {
 		Background = {
 			Primary = Color3.fromRGB(20, 20, 20),
@@ -53,6 +53,4 @@ local Themes = {
 			Secondary = Color3.fromRGB(50, 50, 50),
 		},
 	},
-} :: { [string]: Types.Theme }
-
-return Themes
+} :: { [string]: types.theme }

@@ -12,11 +12,10 @@
 - install pesde packages by running `pesde install` in a terminal
 
 ## 2. making changes
-- we recommend using these extensions:
+- i recommend using these extensions:
   - luau language server
   - selene
   - stylua
-  - todo+
 - if you're editing a script, feel free to add yourself to the credits.
 - if you make a new script, please add the script info (name, class, authors, etc) to the top!
 

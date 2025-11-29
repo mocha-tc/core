@@ -1,4 +1,4 @@
-local fusion = require("../../../roblox_packages/Fusion")
+local fusion = require("../../../roblox_packages/fusion")
 
 local peek = fusion.peek
 local OnEvent, Children = fusion.OnEvent, fusion.Children

@@ -4,10 +4,10 @@
 -- author(s): Primiti_ve
 
 local luaulog = require("./roblox_packages/luaulog")
-local Logger = luaulog.Logger.new({
+local logger = luaulog.Logger.new({
 	luaulog.Common.Enrichers.LogLevelEnricher(),
 	luaulog.Common.Enrichers.DynSourceEnricher(true),
 	luaulog.Common.Enrichers.TraceEnricher(),
 }, { luaulog.Common.RobloxLogSink() })
 
-return Logger
+return logger

@@ -3,7 +3,7 @@
 -- class: manifest
 -- author(s): Primiti_ve
 
-local PropertyMap = {
+local property_map = {
 	BackgroundColor3 = "Background",
 	ScrollBarImageColor3 = "ScrollBar",
 
@@ -11,7 +11,7 @@ local PropertyMap = {
 	ImageColor3 = "Image",
 }
 
-local ValidTypes = {
+local valid_types = {
 	"string",
 	"number",
 	"Color3",
@@ -19,6 +19,6 @@ local ValidTypes = {
 }
 
 return {
-	PropertyMap = PropertyMap,
-	ValidTypes = ValidTypes,
+	property_map = property_map,
+	valid_types = valid_types,
 }

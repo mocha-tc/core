@@ -1,50 +1,41 @@
--- name: Mocha
--- description: mocha's root script (or, the entry point)
+-- name: plugin
+-- description: mocha plugin
 -- class: root
 -- author(s): Primiti_ve
 
-local Converter = require("./roblox_packages/Converter")
-local Brush = require("./roblox_packages/Brush")
-local Utils = require("./roblox_packages/Utils")
+local converter = require("./roblox_packages/converter")
+local brush = require("./roblox_packages/brush")
+local utils = require("./roblox_packages/utils")
 
-local WidgetClass = require("./src/widget")
+local widget_class = require("@self/widget")
 
-function build(PluginGlobal: unknown)
-	local GUI = script.assets.GUI:Clone()
+function build(plugin_global: unknown)
+	local gui = script.assets.gui:Clone()
 
-	Utils.PluginGlobal.set(PluginGlobal)
+	utils.plugin_global.set(plugin_global)
 
-	local WidgetSize = Vector2.new(450, 250)
-	local CreatedWidget = WidgetClass.new("mocha", WidgetSize)
+	local widget_size = Vector2.new(450, 250)
+	local plugin_widget = widget_class.new("mocha", widget_size)
 
-	CreatedWidget:CreateWidget(GUI)
-	CreatedWidget:CreateToolbar("mocha")
-	CreatedWidget:CreateButton("mocha", "a tc to v5.5 co converter", "rbxassetid://100158613404254")
+	plugin_widget:create_widget(gui)
+	plugin_widget:create_toolbar("mocha")
+	plugin_widget:create_button("mocha", "a tc to v5.5 co converter", "rbxassetid://100158613404254")
 
-	local Widget = CreatedWidget:Get("Widget")
-
-	local Environment = {
-		Modules = {
-			Brush = Brush,
-			Converter = Converter,
+	local widget = plugin_widget:get("widget")
+	local environment = {
+		modules = {
+			brush = brush,
+			converter = converter,
 		},
 
-		Widget = Widget,
+		widget = widget,
 
-		Exports = {
-			PluginGlobal = Utils.PluginGlobal,
+		exports = {
+			plugin_global = utils.plugin_global,
 		},
 	}
 
-	print(GUI)
-	print(CreatedWidget)
-	print(Widget)
-
-	for _, RunOnSpawn in pairs(Widget:GetDescendants()) do
-		if RunOnSpawn:IsA("ModuleScript") and RunOnSpawn:HasTag("RunOnSpawn") then
-			task.spawn(require(RunOnSpawn), Environment)
-		end
-	end
+	print(environment)
 end
 
 return {
