@@ -1,7 +1,7 @@
 -- name: teleporter
 -- description: teleporter converter
 -- class: converter
--- author(s): Native, Primiti_ve
+-- author(s): native315, Primiti_ve
 
 -- tower creator teleporter
 -- adding comments here cuz i know i'm gonna forget everything in 3 seconds
