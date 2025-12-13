@@ -18,7 +18,7 @@ utils.misc.traverse(script, function(instance: Instance)
 
 	local module = require(instance)
 
-	converters.converters[instance.Name] = module
+	converters[instance.Name] = module
 end)
 
 -- best-guess conversion

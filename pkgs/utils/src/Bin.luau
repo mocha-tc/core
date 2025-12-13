@@ -5,44 +5,99 @@
 
 export type bin_item = Instance | RBXScriptConnection | () -> ...any | thread
 export type bin = {
-	add: (item: bin_item) -> (),
+	add: (bin_item: bin_item, identifier: string) -> bin_item,
+	get: () -> bin,
+
+	remove: (identifier: string) -> (),
 	empty: () -> (),
 }
 
-function new(): bin
-	local bin: { bin_item } = {}
+local bins = {} :: { [string]: bin }
 
-	return {
-		add = function(item: bin_item)
-			-- add bin_item to bin
-			table.insert(bin, item)
+-- simple helper function to clean up an item
+function remove_item(bin_item: bin_item): boolean
+	if not bin_item then
+		-- bin_item doesn't exist!
+		return false
+	end
 
-			return item
-		end,
+	if typeof(bin_item) == "Instance" then
+		-- destroy bin_item
+		bin_item:Destroy()
+	elseif typeof(bin_item) == "RBXScriptConnection" then
+		-- disconnect bin_item
+		bin_item:Disconnect()
+	elseif typeof(bin_item) == "function" then
+		-- run bin_item asynchronously
+		-- mainly used for any tasks that run when the bin is being emptied (e.g in-depth cleanup)
+		task.spawn(bin_item)
+	elseif typeof(bin_item) == "thread" then
+		-- cancel bin_item
+		task.cancel(bin_item)
+	else
+		-- bin_item is not of a valid type
+		return false
+	end
 
-		empty = function()
-			-- loop through all items in the bin
-			for _, item in pairs(bin) do
-				if typeof(item) == "Instance" then
-					-- destroy item
-					item:Destroy()
-				elseif typeof(item) == "RBXScriptConnection" then
-					-- disconnect item
-					item:Disconnect()
-				elseif typeof(item) == "function" then
-					-- run item
-					-- mainly used for any tasks that run when the bin is being emptied (e.g in-depth cleanup)
-					task.spawn(item)
-				elseif typeof(item) == "thread" then
-					-- cancel item
-					task.cancel(item)
-				end
+	-- it got cleaned up successfully
+	return true
+end
+
+function new(identifier: string?): bin
+	local bin_storage = {} :: { [string]: bin_item }
+	local bin = {}
+
+	if identifier then
+		bins[identifier] = bin_storage
+	else
+		table.insert(bins, bin_storage)
+	end
+
+	function bin.add(bin_item: bin_item, identifier: string)
+		-- add bin_item to bin
+		bin[identifier] = bin_item
+
+		return bin_item
+	end
+
+	-- honestly? i could just return the bin aswell as the other functions, but i find this to be neater
+	function bin.get()
+		return bin
+	end
+
+	function bin.remove(identifier: string)
+		local bin_item = bin[identifier]
+
+		if bin_item then
+			remove_item(bin_item)
+		end
+	end
+
+	function bin.empty()
+		-- loop through all items in the bin
+		for _, bin_item in pairs(bin) do
+			remove_item(bin_item)
+		end
+
+		-- clear the bin
+		table.clear(bin)
+	end
+
+	function bin.destroy()
+		bin.empty()
+
+		if identifier then
+			bins[identifier] = nil
+		else
+			if table.find(bins, bin_storage) then
+				table.remove(bins, table.find(bins, bin_storage))
 			end
+		end
 
-			-- clear the bin
-			table.clear(bin)
-		end,
-	} :: bin
+		bin = nil
+	end
+
+	return bin
 end
 
 return {
