@@ -4,25 +4,29 @@
 -- author(s): native315, Primiti_ve
 
 export type TCDisappearingPlatform = Part & {
-	EffectColor:Color3Value, --the color the outline turns after it disappears
-	fE:BoolValue, -- fade effect
-	fT:NumberValue, -- fade time
-	rT:NumberValue, -- respawn time
-	SelectionBox:SelectionBox, -- selection box
+	EffectColor: Color3Value, --the color the outline turns after it disappears
+	fE: BoolValue, -- fade effect
+	fT: NumberValue, -- fade time
+	rT: NumberValue, -- respawn time
+	SelectionBox: SelectionBox, -- selection box
 }
 
 -- etoh v5.5 disappearingplatform
 export type V5DisappearingPlatform = typeof(script:WaitForChild("Original"))
+
+local original = script:WaitForChild("Original") :: Instance
 
 function is_convertable(Model: Part): (boolean, string?)
 	if not Model or not Model:IsA("BasePart") then
 		return false, "disappearing platform is missing or not a BasePart"
 	end
 
-	if not Model:FindFirstChild("EffectColor") or 
-		not Model:FindFirstChild("fE") or 
-		not Model:FindFirstChild("fT") or 
-		not Model:FindFirstChild("rT") then
+	if
+		not Model:FindFirstChild("EffectColor")
+		or not Model:FindFirstChild("fE")
+		or not Model:FindFirstChild("fT")
+		or not Model:FindFirstChild("rT")
+	then
 		return false, "disappearing platform is missing one or more critical components"
 	end
 
@@ -30,7 +34,7 @@ function is_convertable(Model: Part): (boolean, string?)
 end
 
 function convert(Model: TCDisappearingPlatform): V5DisappearingPlatform
-	local newdp = script.Original:Clone() :: V5DisappearingPlatform
+	local newdp = original:Clone() :: V5DisappearingPlatform
 
 	newdp.Name = "DisappearingPlatform"
 
@@ -47,7 +51,7 @@ function convert(Model: TCDisappearingPlatform): V5DisappearingPlatform
 
 	newdp:Destroy()
 
-	return Model 
+	return Model
 end
 
 return {

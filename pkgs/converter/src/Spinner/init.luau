@@ -43,7 +43,22 @@ export type SpinningPart = Model & {
 -- etoh v5.5 spinning platform
 export type SpinningPlatform = typeof(defaultSpinningPlatform)
 
-function is_convertable(Model: Model): (boolean, string?)
+-- is_convertable model type
+export type SpinnerModel = Model & {
+    Base: Part,
+    Part: Part,
+    
+    A: StringValue,
+    Anchor: BoolValue,
+    S: BoolValue,
+    T: NumberValue,
+    aA: BoolValue,
+    x0: NumberValue,
+    y0: NumberValue,
+    z0: NumberValue,
+}
+
+function is_convertable(Model: SpinnerModel): (boolean, string?)
 	if not Model or not Model:IsA("Model") then
 		return false, "model is missing or not a Model"
 	end
@@ -77,7 +92,7 @@ function is_convertable(Model: Model): (boolean, string?)
 	local axises = { "x", "y", "z" }
 
 	for _, axis in pairs(axises) do
-		if not Model:FindFirstChild(axis .. "O") or not Model[axis .. "O"]:IsA("NumberValue") then
+		if not Model:FindFirstChild(axis .. "O") or not (Model :: any)[axis .. "O"]:IsA("NumberValue") then
 			return false, `model is missing {axis}O, or {axis}O is not a NumberValue`
 		end
 	end

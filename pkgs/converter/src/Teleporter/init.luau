@@ -29,7 +29,21 @@ export type TCTeleporter = Model & {
 -- etoh v5.5 teleporter
 export type V5Teleporter = typeof(script:WaitForChild("Original"))
 
-function is_convertable(Model: Model): (boolean, string?)
+-- is_convertable model type
+export type TeleporterModel = Model & {
+	mE: BoolValue,
+	mT: NumberValue,
+	tP: BoolValue,
+	tPB: BoolValue,
+	wP: BoolValue,
+	
+	Des: BasePart,
+	TP: BasePart,
+}
+
+ local original = script:WaitForChild("Original") :: Instance
+
+function is_convertable(Model: TeleporterModel): (boolean, string?)
 	if not Model or not Model:IsA("Model") then
 		return false, "model is missing or not a Model"
 	end
@@ -45,12 +59,13 @@ function is_convertable(Model: Model): (boolean, string?)
 end
 
 function convert(Model: TCTeleporter): V5Teleporter
-	local newtp = script.Original:Clone() :: V5Teleporter
+	local newtp = original:Clone() :: V5Teleporter
+	local sound = Model.destination:FindFirstChildOfClass("Sound") :: Sound
 
 	newtp.Name = "Teleporter"
 
 	Model.destination.Name = "Destination"
-	Model.destination:FindFirstChildOfClass("Sound").Name = "TeleportSound"
+	sound.Name = "TeleportSound"
 	Model.destination.Parent = newtp
 
 	Model.Telepart.Name = "Teleporter"

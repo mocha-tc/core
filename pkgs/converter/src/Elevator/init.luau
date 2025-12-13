@@ -19,6 +19,8 @@ export type TCElevator = Part & { -- like 99% sure it's a part because you can't
 -- etoh v5.5 teleporter
 export type V5Elevator = typeof(script:WaitForChild("Original"))
 
+ local original = script:WaitForChild("Original") :: Instance
+
 function is_convertable(Model: Part): (boolean, string?)
 	if not Model or not Model:IsA("BasePart") then
 		return false, "elevator is missing or not a BasePart"
@@ -32,7 +34,7 @@ function is_convertable(Model: Part): (boolean, string?)
 end
 
 function convert(Model: TCElevator): V5Elevator
-	local newelevator = script.Original:Clone() :: V5Elevator
+	local newelevator = original:Clone() :: V5Elevator
 
 	newelevator.Name = "Elevator"
 
